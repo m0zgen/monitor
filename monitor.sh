@@ -102,6 +102,28 @@ service_enabled() {
     fi
 }
 
+runAction() {
+
+    if [[ "$_ACTION" -eq "1" ]]; then
+
+            if [[ -z "$_SCRIPT" ]]; then
+                echo "Please set -a action runner script path."
+            else
+                checkSCRIPT $_SCRIPT
+            fi
+        fi 
+}
+
+if_bool() {
+
+    local n=$1
+    if [[ "$_IS_BOOL" == "true" ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 # Action
 checkSTAT() {
 
@@ -114,6 +136,8 @@ checkSTAT() {
         if [[ "$_RECOVER" -eq 1 ]]; then
             echo -e "Recovery not needed"
         fi
+
+        runAction
         
     else
 
@@ -121,14 +145,7 @@ checkSTAT() {
 
             echo -e "Service: $_SVC has stopped status"
 
-            if [[ "$_ACTION" -eq "1" ]]; then
-
-                if [[ -z "$_SCRIPT" ]]; then
-                    echo "Please set -a action runner script path."
-                else
-                    checkSCRIPT $_SCRIPT
-                fi
-            fi 
+            runAction
 
             if [[ "$_RECOVER" -eq 1 ]]; then
 
@@ -148,8 +165,6 @@ checkSTAT() {
             echo -e "Systemd unit $_SVC does not exist"
         fi
 
-        
-
     fi
 }
 
@@ -161,6 +176,7 @@ if [[ "$_UNIT_NAME" -eq "1" ]]; then
     if [[ -z "$_SERVICE" ]]; then
         echo "Please set unit.service name in -u."
     else
-        checkSTAT $_SERVICE
+        if_bool $_IS_BOOL
+        # checkSTAT $_SERVICE
     fi
 fi
