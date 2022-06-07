@@ -10,17 +10,37 @@ SCRIPT_PATH=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 # Initial variables
 # ---------------------------------------------------\
 
-# Unit name as argument
+# Script has argument or not
 _SVC=$@
+# Def status
+_STAT=0
 
-systemctl is-active $_SVC >/dev/null 2>&1 && _STAT=1 # || _STAT=0
+# Checking active status from systemd unit
+checkSVC() {
+    systemctl is-active $_SVC >/dev/null 2>&1 && _STAT=1 # || _STAT=0
+}
 
-if [[ "$_STAT" -eq "1" ]]; then
+# Action
+checkSTAT() {
+
+    checkSVC
+
+    if [[ "$_STAT" -eq "1" ]]; then
     
-    echo -e "Service: $_SVC still running"
-    
+        echo -e "Service: $_SVC still running"
+        
+    else
+
+        echo -e "Service: $_SVC has stopped status"
+
+    fi
+}
+
+# Argument passing
+if [ $# -eq 0 ]; then
+    echo "No arguments provided"
+    usage
+    exit 1
 else
-
-    echo -e "Service: $_SVC has stopped status"
-
+    checkSTAT
 fi
