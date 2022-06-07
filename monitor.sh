@@ -23,7 +23,6 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -a|--action) SKIPNET=1; ;;
         -h|--help) usage ;; 
-        *) usage ;;
     esac
     shift
 done
