@@ -15,6 +15,22 @@ _SVC=$@
 # Def status
 _STAT=0
 
+# Options
+# ---------------------------------------------------\
+
+# Checks arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -a|--action) SKIPNET=1; ;;
+        -h|--help) usage ;; 
+        *) usage ;;
+    esac
+    shift
+done
+
+# Functions
+# ---------------------------------------------------\
+
 # Help
 usage() {
     echo -e "Pass service name as argument please"
@@ -41,6 +57,9 @@ checkSTAT() {
 
     fi
 }
+
+# Runner
+# ---------------------------------------------------\
 
 # Argument passing
 if [ $# -eq 0 ]; then
