@@ -49,7 +49,7 @@ done
 
 # Checking active status from systemd unit
 checkSVC() {
-    local _SVC=$1
+    _SVC=$1
     systemctl is-active $_SVC >/dev/null 2>&1 && _STAT=1 # || _STAT=0
 }
 
