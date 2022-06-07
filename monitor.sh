@@ -102,24 +102,12 @@ service_enabled() {
     fi
 }
 
-runAction() {
-
-    if [[ "$_ACTION" -eq "1" ]]; then
-
-            if [[ -z "$_SCRIPT" ]]; then
-                echo "Please set -a action runner script path."
-            else
-                checkSCRIPT $_SCRIPT
-            fi
-        fi 
-}
-
 if_bool() {
-
     local n=$1
     if [[ "$_IS_BOOL" == "true" ]]; then
         return 1
     else
+        echo "AAAA - 0"
         return 0
     fi
 }
@@ -137,7 +125,14 @@ checkSTAT() {
             echo -e "Recovery not needed"
         fi
 
-        runAction
+        if [[ "$_ACTION" -eq "1" ]]; then
+
+            if [[ -z "$_SCRIPT" ]]; then
+                echo "Please set -a action runner script path."
+            else
+                checkSCRIPT $_SCRIPT
+            fi
+        fi 
         
     else
 
@@ -145,7 +140,14 @@ checkSTAT() {
 
             echo -e "Service: $_SVC has stopped status"
 
-            runAction
+            if [[ "$_ACTION" -eq "1" ]]; then
+
+                if [[ -z "$_SCRIPT" ]]; then
+                    echo "Please set -a action runner script path."
+                else
+                    checkSCRIPT $_SCRIPT
+                fi
+            fi 
 
             if [[ "$_RECOVER" -eq 1 ]]; then
 
