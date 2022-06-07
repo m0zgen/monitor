@@ -121,9 +121,11 @@ checkSTAT() {
             if [[ "$_RECOVER" -eq 1 ]]; then
 
                 if service_exists $_SVC; then
-                systemctl enable --now $_SVC
-
+                    echo -e "Enabling $_SVC unit"
+                    systemctl enable --now $_SVC
                 fi
+
+                echo -e "Restarting $_SVC unit"
                 systemctl restart $_SVC
             fi
         else
