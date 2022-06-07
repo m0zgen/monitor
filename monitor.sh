@@ -14,18 +14,7 @@ SCRIPT_PATH=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 _SVC=$@
 # Def status
 _STAT=0
-
-# Options
-# ---------------------------------------------------\
-
-# Checks arguments
-while [[ "$#" -gt 0 ]]; do
-    case $1 in
-        -a|--action) SKIPNET=1; ;;
-        -h|--help) usage ;; 
-    esac
-    shift
-done
+_ACTION=$2
 
 # Functions
 # ---------------------------------------------------\
@@ -53,6 +42,18 @@ checkSTAT() {
     else
 
         echo -e "Service: $_SVC has stopped status"
+
+        if [[ -n "$_ACTION" ]]; then
+            echo -e "Try to run action script..."
+
+            if [[ -f  "$_ACTION" ]]; then
+                bash $_ACTION
+            else
+                echo -e "Action script does not found. Exit."
+                exit 1
+            fi
+
+        fi
 
     fi
 }
