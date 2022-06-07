@@ -12,6 +12,7 @@ SCRIPT_PATH=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
 _STAT=0
 _CHECK_SCRIPT=$SCRIPT_PATH/tools/check.sh
+_AFTER_STAT=0
 
 # Init
 # ---------------------------------------------------\
@@ -51,14 +52,22 @@ done
 # Checking active status from systemd unit
 checkSVC() {
     _SVC=$1
-    systemctl is-active $1 >/dev/null 2>&1 && local _STATE=1 # || _STAT=0
+    systemctl is-active $1 >/dev/null 2>&1 && local  _STAT=1 # || _STAT=0
 
-    if [[ "$_STATE" -eq "1" ]]; then
-        _STAT=1
+    if [[ "$_STAT" -eq "1" ]]; then
         return 1
+        _AFTER_STAT=1
     else
-        _STAT=0
         return 0
+    fi
+}
+
+setStatus() {
+    local n=$1
+    if [[ `systemctl is-active "$n"` ]]; then
+        return 0
+    else
+        return 1
     fi
 }
 
@@ -156,11 +165,12 @@ checkSTAT() {
                 fi
 
                 echo -e "Restarting $_SVC unit"
-                systemctl restart $_SVC; sleep 2
+                systemctl restart $_SVC; sleep 2; setStatus
 
-                # if checkSVC $_SERVICE; then
-                #     echo "Service: $_SERVICE successfully started"
-                # fi
+                if [[ "$_AFTER_STAT" -eq "1"]]; then
+                    echo "Service: $_SERVICE successfully started"
+                fi
+
 
                 bash $_CHECK_SCRIPT $_SERVICE
             fi
