@@ -11,6 +11,7 @@ SCRIPT_PATH=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 # ---------------------------------------------------\
 
 _STAT=0
+_CHECK_SCRIPT=$SCRIPT_PATH/tools/check.sh
 
 # Init
 # ---------------------------------------------------\
@@ -157,9 +158,11 @@ checkSTAT() {
                 echo -e "Restarting $_SVC unit"
                 systemctl restart $_SVC; sleep 2
 
-                if checkSVC $_SERVICE; then
-                    echo "Service: $_SERVICE successfully started"
-                fi
+                # if checkSVC $_SERVICE; then
+                #     echo "Service: $_SERVICE successfully started"
+                # fi
+
+                bash $_CHECK_SCRIPT
             fi
         else
             echo -e "Systemd unit $_SVC does not exist"
