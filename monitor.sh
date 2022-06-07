@@ -15,6 +15,12 @@ _SVC=$@
 # Def status
 _STAT=0
 
+# Help
+usage() {
+    echo -e "Pass service name as argument please"
+    exit 1
+}
+
 # Checking active status from systemd unit
 checkSVC() {
     systemctl is-active $_SVC >/dev/null 2>&1 && _STAT=1 # || _STAT=0
@@ -40,7 +46,6 @@ checkSTAT() {
 if [ $# -eq 0 ]; then
     echo "No arguments provided"
     usage
-    exit 1
 else
     checkSTAT
 fi
