@@ -50,11 +50,13 @@ done
 # Checking active status from systemd unit
 checkSVC() {
     _SVC=$1
-    systemctl is-active $_SVC >/dev/null 2>&1 && _STAT=1 # || _STAT=0
+    systemctl is-active $1 >/dev/null 2>&1 && local _STATE=1 # || _STAT=0
 
-    if [[ "$_STAT" -eq "1" ]]; then
+    if [[ "$_STATE" -eq "1" ]]; then
+        _STAT=1
         return 1
     else
+        _STAT=0
         return 0
     fi
 }
