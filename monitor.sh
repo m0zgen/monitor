@@ -56,7 +56,6 @@ checkSVC() {
 
     if [[ "$_STAT" -eq "1" ]]; then
         return 1
-        _AFTER_STAT=1
     else
         return 0
     fi
@@ -68,6 +67,7 @@ setStatus() {
         return 0
     else
         return 1
+        _AFTER_STAT=1
     fi
 }
 
