@@ -162,7 +162,7 @@ checkSTAT() {
                 #     echo "Service: $_SERVICE successfully started"
                 # fi
 
-                bash $_CHECK_SCRIPT
+                bash $_CHECK_SCRIPT $_SERVICE
             fi
         else
             echo -e "Systemd unit $_SVC does not exist"
