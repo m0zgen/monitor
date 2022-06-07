@@ -12,8 +12,16 @@ OR just only `-r` for recovery unit:
 ./monitor.sh -u multipathd -r
 ```
 
-You can use just script if service gas `stopped` status:
+You can use just script if service has `stopped` status:
 
 ```bash
 ./monitor.sh -u sshd -a "/path/to/action-script/action.sh"
 ````
+
+OR check unit without actions:
+
+```
+./monitor.sh -u sshd
+```
+
+TODO: send status to Telegram
