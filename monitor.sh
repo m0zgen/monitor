@@ -108,6 +108,10 @@ checkSTAT() {
     if [[ "$_STAT" -eq "1" ]]; then
     
         echo -e "Service: $_SVC still running"
+
+        if [[ "$_RECOVER" -eq 1 ]]; then
+            echo -e "Recovery not needed"
+        fi
         
     else
 
