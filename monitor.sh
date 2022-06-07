@@ -51,6 +51,12 @@ done
 checkSVC() {
     _SVC=$1
     systemctl is-active $_SVC >/dev/null 2>&1 && _STAT=1 # || _STAT=0
+
+    if [[ "$_STAT" -eq "1" ]]; then
+        return 1
+    else
+        return 0
+    fi
 }
 
 runAction() {
@@ -126,7 +132,11 @@ checkSTAT() {
                 fi
 
                 echo -e "Restarting $_SVC unit"
-                systemctl restart $_SVC
+                systemctl restart $_SVC; sleep 2
+
+                if checkSVC $_SVC; then
+                    echo "Service: $_SVC successfully started"
+                fi
             fi
         else
             echo -e "Systemd unit $_SVC does not exist"
