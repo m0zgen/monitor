@@ -138,8 +138,8 @@ checkSTAT() {
                 echo -e "Restarting $_SVC unit"
                 systemctl restart $_SVC; sleep 2
 
-                if checkSVC $_SVC; then
-                    echo "Service: $_SVC successfully started"
+                if checkSVC $_SERVICE; then
+                    echo "Service: $_SERVICE successfully started"
                 fi
             fi
         else
