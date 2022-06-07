@@ -20,7 +20,7 @@ usage() {
     echo -e "Pass service name as argument please:
     -u - unit name
     -a - path to bash action script
-    -
+    -r - recovery unit (enabling and restarting actions)
     "
     exit 1
 }
