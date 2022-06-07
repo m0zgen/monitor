@@ -17,7 +17,7 @@ _STAT=0
 
 # Help
 usage() {
-    echo -e "Pass service name as argument please:
+    echo -e "\nPass service name as argument please:
     -u - unit name
     -a - path to bash action script
     -r - recovery unit (enabling and restarting actions)
