@@ -1,8 +1,18 @@
 # Monitor.sh - Script for checking systemd unit status
 
-And `monitor.sh` can run custom script / action if unit has stopped or running statuses
+And `monitor.sh` can run custom script / action if unit has stopped or running statuses.
 
-You can use multiple argument for checking and actions depends from result `is-astatus` status:
+If service has stopped status, you can recover this unit service and run custom script:
+```bash
+./monitor.sh -u multipathd -r -a "/usr/local/sbin/test.sh"
+```
+
+OR just only `-r` for recovery unit:
+```
+./monitor.sh -u multipathd -r
+```
+
+You can use just script:
 
 ```bash
 ./monitor.sh -u sshd -a "/path/to/action-script/action.sh"
